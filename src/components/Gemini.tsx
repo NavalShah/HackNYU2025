@@ -77,7 +77,7 @@ function Gemini({ initialPrompt }: Props) {
       <div className="flex bg-white p-4 shadow">
         {initialPrompt}
       </div>
-      <div className="overflow-auto bg-gray-200 p-1 shadow italic light">
+      <div className="bg-gray-200 p-1 shadow italic light">
         You can use this Gemini-Powered chat to learn more.
       </div>
       <div className="flex flex-col overflow-auto bg-white p-4 shadow h-full flex-grow-1 space-y-2"> {/* Use flex-col and space-y for vertical stacking */}

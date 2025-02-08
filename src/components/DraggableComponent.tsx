@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Gemini from './Gemini';
-import { CIPHERS } from './Ciphers'; // Extracted CIPHERS to a separate file
+import { CIPHERS } from './Ciphers';
 
 type Props = {
   children: React.ReactNode;
@@ -16,7 +16,6 @@ export type DragData = {
 };
 
 function DraggableComponent({ children, componentName, defaultProps }: Props) {
-  const [isHovered, setIsHovered] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   // Safely find the cipher paragraph
@@ -36,42 +35,46 @@ function DraggableComponent({ children, componentName, defaultProps }: Props) {
   const showPopup = () => setIsPopupVisible(true);
   const closePopup = () => setIsPopupVisible(false);
 
+  // Handle click on overlay to close popup
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      closePopup();
+    }
+  };
+
   return (
     <div
       draggable
       onDragStart={onDragStart}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") showPopup();
       }}
-      tabIndex={0} // Ensures keyboard focus
+      tabIndex={0}
       style={{ position: 'relative', outline: 'none' }}
     >
       {children}
 
-      {isHovered && (
-        <button
-          onClick={showPopup}
-          style={{
-            position: 'absolute',
-            top: '10px',
-            right: '10px',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            color: 'white',
-            border: 'none',
-            padding: '5px 10px',
-            borderRadius: '5px',
-            cursor: 'pointer',
-          }}
-        >
-          Open Popup
-        </button>
-      )}
+      <button
+        onClick={showPopup}
+        style={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          color: 'white',
+          border: 'none',
+          padding: '5px 10px',
+          borderRadius: '5px',
+          cursor: 'pointer',
+        }}
+      >
+        ?
+      </button>
 
       {/* Popup Overlay */}
       {isPopupVisible && (
         <div
+          onClick={handleOverlayClick}  // Add click handler to overlay
           style={{
             position: 'fixed',
             top: 0,
@@ -99,26 +102,6 @@ function DraggableComponent({ children, componentName, defaultProps }: Props) {
             }}
           >
             <Gemini initialPrompt={cipherText} />
-            <button
-              onClick={closePopup}
-              onKeyDown={(e) => {
-                if (e.key === "Escape") closePopup();
-              }}
-              aria-label="Close Popup"
-              style={{
-                position: 'absolute',
-                top: '10px',
-                right: '10px',
-                backgroundColor: 'red',
-                color: 'white',
-                border: 'none',
-                padding: '5px 10px',
-                borderRadius: '50%',
-                cursor: 'pointer',
-              }}
-            >
-              X
-            </button>
           </div>
         </div>
       )}
