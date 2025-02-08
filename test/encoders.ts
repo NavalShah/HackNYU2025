@@ -8,7 +8,6 @@ export enum Speed {
     Fast
 }
 
-
 export interface Encoder {
     encode: (input: string) => string,
     decode: (input: string) => string,

@@ -19,14 +19,14 @@ function Editor({}: Props) {
 
   return (
     <main className="flex h-screen w-full gap-4">
-      <Elementor className="w-1/5" />
+      {/* <Elementor className="w-1/5" /> */}
       <MainContainer
         setStructure={setStructure}
         className={cn(
           layout === LAYOUT.FLEX ? 'flex h-full flex-col w-full' : 'grid'
         )}
       />
-      <EditComponent className="w-1/5" />
+      {/* <EditComponent className="w-1/5" /> */}
     </main>
   );
 }
