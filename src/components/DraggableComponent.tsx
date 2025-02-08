@@ -3,6 +3,17 @@
 import React, { useState } from 'react';
 import Gemini from './Gemini';
 
+const CIPHERS = [
+  { name: 'Caesar Cipher', paragraph: "This is a Caesar Cipher." },
+  { name: 'Vigenère Cipher', paragraph: "This is the Vigenère Cipher." },
+  { name: 'XOR Cipher', paragraph: "XOR Cipher." },
+  { name: 'Base64 Encoding', paragraph: "Encoder" },
+  { name: 'Base64 Decoding', paragraph: "DEncoder" },
+  { name: 'Blowfish', paragraph: "blwFISH" },
+  { name: 'TripleDES', paragraph: "smething TRIPLEDES" },
+  { name: 'AES', paragraph: "AES something" },
+];
+
 type Props = {
   children: React.ReactNode;
   componentName: string;
@@ -17,6 +28,8 @@ export type DragData = {
 function DraggableComponent({ children, componentName, defaultProps }: Props) {
   const [isHovered, setIsHovered] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  
+  console.log(componentName);
 
   const onDragStart = (e: React.DragEvent<HTMLElement>) => {
     e.dataTransfer.setData(
@@ -91,7 +104,7 @@ function DraggableComponent({ children, componentName, defaultProps }: Props) {
               width: '80%',
             }}
           >
-            <Gemini initialPrompt='A computer is something that computes.' />
+            <Gemini initialPrompt={CIPHERS[CIPHERS.map(c => c.name).indexOf(componentName)].paragraph} />
             <button
               onClick={closePopup}
               style={{
