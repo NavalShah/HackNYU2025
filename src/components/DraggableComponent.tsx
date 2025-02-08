@@ -2,17 +2,7 @@
 
 import React, { useState } from 'react';
 import Gemini from './Gemini';
-
-const CIPHERS = [
-  { name: 'Caesar Cipher', paragraph: "This is a Caesar Cipher." },
-  { name: 'Vigenère Cipher', paragraph: "This is the Vigenère Cipher." },
-  { name: 'XOR Cipher', paragraph: "XOR Cipher." },
-  { name: 'Base64 Encoding', paragraph: "Encoder" },
-  { name: 'Base64 Decoding', paragraph: "DEncoder" },
-  { name: 'Blowfish', paragraph: "blwFISH" },
-  { name: 'TripleDES', paragraph: "smething TRIPLEDES" },
-  { name: 'AES', paragraph: "AES something" },
-];
+import { CIPHERS } from './Ciphers'; // Extracted CIPHERS to a separate file
 
 type Props = {
   children: React.ReactNode;
@@ -28,8 +18,10 @@ export type DragData = {
 function DraggableComponent({ children, componentName, defaultProps }: Props) {
   const [isHovered, setIsHovered] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-  
-  console.log(componentName);
+
+  // Safely find the cipher paragraph
+  const cipherIndex = CIPHERS.findIndex(c => c.name === componentName);
+  const cipherText = cipherIndex !== -1 ? CIPHERS[cipherIndex].paragraph : "No information available.";
 
   const onDragStart = (e: React.DragEvent<HTMLElement>) => {
     e.dataTransfer.setData(
@@ -41,21 +33,20 @@ function DraggableComponent({ children, componentName, defaultProps }: Props) {
     );
   };
 
-  const showPopup = () => {
-    setIsPopupVisible(true);
-  };
-
-  const closePopup = () => {
-    setIsPopupVisible(false);
-  };
+  const showPopup = () => setIsPopupVisible(true);
+  const closePopup = () => setIsPopupVisible(false);
 
   return (
     <div
       draggable
       onDragStart={onDragStart}
-      onMouseEnter={() => setIsHovered(true)}  // Set hovered state on mouse enter
-      onMouseLeave={() => setIsHovered(false)} // Set hovered state on mouse leave
-      style={{ position: 'relative' }} // Ensure positioning for button
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") showPopup();
+      }}
+      tabIndex={0} // Ensures keyboard focus
+      style={{ position: 'relative', outline: 'none' }}
     >
       {children}
 
@@ -71,6 +62,7 @@ function DraggableComponent({ children, componentName, defaultProps }: Props) {
             border: 'none',
             padding: '5px 10px',
             borderRadius: '5px',
+            cursor: 'pointer',
           }}
         >
           Open Popup
@@ -86,11 +78,13 @@ function DraggableComponent({ children, componentName, defaultProps }: Props) {
             left: 0,
             width: '100%',
             height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.7)', // Dark overlay
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            zIndex: 1000, // Ensure the popup is on top
+            zIndex: 1000,
+            opacity: isPopupVisible ? 1 : 0,
+            transition: 'opacity 0.3s ease-in-out',
           }}
         >
           <div
@@ -104,9 +98,13 @@ function DraggableComponent({ children, componentName, defaultProps }: Props) {
               width: '80%',
             }}
           >
-            <Gemini initialPrompt={CIPHERS[CIPHERS.map(c => c.name).indexOf(componentName)].paragraph} />
+            <Gemini initialPrompt={cipherText} />
             <button
               onClick={closePopup}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") closePopup();
+              }}
+              aria-label="Close Popup"
               style={{
                 position: 'absolute',
                 top: '10px',
