@@ -5,7 +5,7 @@ import { ChatSession, GoogleGenerativeAI, StartChatParams } from "@google/genera
 import APIKey from './GeminiAPIKey';
 
 const googleAI = new GoogleGenerativeAI(APIKey);
-const model = googleAI.getGenerativeModel({ model: "gemini-1.5-pro" });
+const model = googleAI.getGenerativeModel({ model: "gemini-2.0-pro" });
 
 function startChat() {
   let chat = model.startChat();
@@ -28,7 +28,6 @@ type message = {
   sender: messageSender,
   text: string
 }
-
 
 function Gemini({ initialPrompt }: Props) {
   const [chat, setChat] = useState<ChatSession>();
@@ -54,6 +53,7 @@ function Gemini({ initialPrompt }: Props) {
 
       setMessages(prev => [...prev, { text: userMessage, sender: messageSender.user }]);
 
+
       let aiContext = userMessage;
       if (messages.length == 0) {
         aiContext = `Here is context for a conversation you will have with someone: '${initialPrompt}' Answer their questions in short paragraphs.\n\nNow, the beginning of the conversation:\n${userMessage}`;
@@ -72,25 +72,30 @@ function Gemini({ initialPrompt }: Props) {
     }
   };
 
-
   return (
     <center className="flex flex-col h-full auto p-4 bg-gray-100 margin-auto">
       <div className="flex overflow-auto bg-white p-4 shadow">
         {initialPrompt}
       </div>
-      <div className="overflow-auto bg-gray p-1 shadow italic light align-left">
-        Use this Gemini-Powered chat to learn more.
+      <div className="overflow-auto bg-gray p-1 shadow italic light">
+        You can use this Gemini-Powered chat to learn more.
       </div>
-      <div className="flex overflow-auto bg-white p-4 shadow h-full flex-grow-1">
+      <div className="flex flex-col overflow-auto bg-white p-4 shadow h-full flex-grow-1 space-y-2"> {/* Use flex-col and space-y for vertical stacking */}
         {messages.map((msg, index) => (
-          (msg.sender != messageSender.system && <div
-            key={index}
-            className={`flex w-2/3 p-2 my-2 rounded-lg text-white ${
-              msg.sender == messageSender.user ? "bg-blue-500 self-end mr-auto justify-start" : msg.sender == messageSender.error ? "bg-red-500 justify ml-auto justify-end" : "bg-gray-500 ml-auto justify-end"
-            }`}
-          >
-            {msg.text}
-          </div>)
+          (msg.sender !== messageSender.system && (
+            <div
+              key={index}
+              className={`flex h-auto p-2 my-2 rounded-lg text-white block max-w-[75%] ${
+                msg.sender === messageSender.user
+                  ? "bg-blue-500 self-end mr-auto justify-start"
+                  : msg.sender === messageSender.error
+                  ? "bg-red-500 justify ml-auto justify-end"
+                  : "bg-gray-500 ml-auto justify-end"
+              }`}
+            >
+              {msg.text}
+            </div>
+          ))
         ))}
 
         {isWaiting && (
@@ -111,15 +116,14 @@ function Gemini({ initialPrompt }: Props) {
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
         <button
-          className={`ml-2 p-2  text-white rounded-lg ${ isWaiting ? "bg-gray-500" : "bg-blue-500"}`}
+          className={`ml-2 p-2 text-white rounded-lg ${isWaiting ? "bg-gray-500" : "bg-blue-500"}`}
           onClick={sendMessage}
         >
-        Send
+          Send
         </button>
       </div>
     </center>
   );
-
 }
 
 export default Gemini;
