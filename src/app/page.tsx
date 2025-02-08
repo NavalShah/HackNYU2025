@@ -1,7 +1,24 @@
 'use client';
 
-import Editor from '../pages/Editor';
+import React, { useState } from 'react';
+import Sidebar from '../components/Sidebar';
+import DropZone from '../components/DropZone';
+import TextArea from '../components/TextArea';
 
 export default function Home() {
-  return <Editor />;
+  const [ciphers, setCiphers] = useState<string[]>([]);
+
+  const handleDrop = (cipher: string) => {
+    setCiphers([...ciphers, cipher]);
+  };
+
+  return (
+    <div className="flex">
+      <Sidebar onDrop={handleDrop} />
+      <div className="flex flex-col flex-grow">
+        <DropZone ciphers={ciphers} />
+        <TextArea />
+      </div>
+    </div>
+  );
 }
