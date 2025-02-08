@@ -2,17 +2,25 @@
 
 import React from 'react';
 
-type DropZoneProps = {
-  ciphers: string[];
-  onDrop: (cipher: string) => void;
+type Cipher = {
+  name: string;
+  key?: string;
+  defaultValue?: any;
+  strength: string;
 };
 
-export default function DropZone({ ciphers, onDrop }: DropZoneProps) {
+type DropZoneProps = {
+  ciphers: Cipher[];
+  onDrop: (cipher: Cipher) => void;
+  onDelete: (index: number) => void; // Add onDelete prop
+};
+
+export default function DropZone({ ciphers, onDrop, onDelete }: DropZoneProps) {
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const data = e.dataTransfer.getData('widgetData');
-    const { name } = JSON.parse(data);
-    onDrop(name);
+    const { name, defaultProps } = JSON.parse(data);
+    onDrop({ name, ...defaultProps });
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -27,8 +35,17 @@ export default function DropZone({ ciphers, onDrop }: DropZoneProps) {
     >
       <h2 className="text-lg font-bold mb-4">Drop Zone</h2>
       {ciphers.map((cipher, index) => (
-        <div key={index} className="p-2 mb-2 bg-white shadow-md rounded">
-          {cipher}
+        <div key={index} className="cipher-tile">
+          <div>
+            <div>{cipher.name}</div>
+            <div className="text-sm text-gray-600">Strength: {cipher.strength}</div>
+          </div>
+          <button
+            className="delete-button"
+            onClick={() => onDelete(index)} // Call onDelete when clicked
+          >
+            ×
+          </button>
         </div>
       ))}
     </div>
