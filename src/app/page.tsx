@@ -1,36 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar';
-import DropZone from '../components/DropZone';
-import TextArea from '../components/TextArea';
+import Login from "@/pages/login";  
+import Signup from "@/pages/signup";
 
-type Cipher = {
-  name: string;
-  key?: string;
-  defaultValue?: any;
-  strength: string;
-};
-
-export default function Home() {
-  const [ciphers, setCiphers] = useState<Cipher[]>([]);
-
-  const handleDrop = (cipher: Cipher) => {
-    setCiphers([...ciphers, cipher]);
-  };
-
-  const handleDelete = (index: number) => {
-    const newCiphers = ciphers.filter((_, i) => i !== index);
-    setCiphers(newCiphers);
-  };
-
+export default function Home(){
   return (
-    <div className="flex h-screen">
-      <Sidebar onDrop={handleDrop} />
-      <div className="flex flex-col flex-grow overflow-auto">
-        <DropZone ciphers={ciphers} onDrop={handleDrop} onDelete={handleDelete} />
-        <TextArea ciphers={ciphers} />
-      </div>
+    <div>
+      <Signup></Signup>
+      <Login></Login>
     </div>
   );
 }
