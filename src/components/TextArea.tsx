@@ -67,6 +67,20 @@ export default function TextArea({ ciphers }: TextAreaProps) {
     setOutputText(result);
   };
 
+  const handleDownload = () => {
+    // Create a Blob with the output text
+    const blob = new Blob([outputText], { type: 'text/plain' });
+    // Create a link element
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'encrypted_output.txt'; // File name
+    // Trigger the download
+    link.click();
+    // Clean up
+    URL.revokeObjectURL(link.href);
+  };
+
+
   const handleDecrypt = () => {
     let result = inputText;
 
@@ -127,6 +141,13 @@ export default function TextArea({ ciphers }: TextAreaProps) {
           onClick={handleDecrypt}
         >
           Decrypt
+        </button>
+        <button
+          className="bg-purple-500 text-white px-4 py-2 rounded"
+          onClick={handleDownload}
+          disabled={!outputText} // Disable if no output
+        >
+          Download
         </button>
       </div>
       <textarea
