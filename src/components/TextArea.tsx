@@ -1,14 +1,40 @@
 'use client';
 
 import React, { useState } from 'react';
+import { caesarCipher, vigenereCipher} from './utils/ciphers'
 
-export default function TextArea() {
+
+type Cipher = {
+  name: string;
+  key?: string; // Add any necessary parameters for each cipher
+};
+
+type TextAreaProps = {
+  ciphers: Cipher[];
+};
+
+export default function TextArea({ ciphers }: TextAreaProps) {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
 
   const handleEncrypt = () => {
-    // Implement encryption logic here
-    setOutputText(inputText); // Placeholder
+    let result = inputText;
+
+    ciphers.forEach((cipher) => {
+      switch (cipher.name) {
+        case 'Caesar Cipher':
+          result = caesarCipher(result, 3, true); // Shift of 3 for encryption
+          break;
+        case 'Vigenère Cipher':
+          result = vigenereCipher(result, 'key', true); // Use a key for encryption
+          break;
+        // Add cases for other ciphers here
+        default:
+          break;
+      }
+    });
+
+    setOutputText(result);
   };
 
   return (

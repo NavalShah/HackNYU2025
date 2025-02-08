@@ -16,8 +16,8 @@ export default function Home() {
     <div className="flex">
       <Sidebar onDrop={handleDrop} />
       <div className="flex flex-col flex-grow">
-        <DropZone ciphers={ciphers} />
-        <TextArea />
+        <DropZone ciphers={ciphers} onDrop={handleDrop} />
+        <TextArea ciphers={ciphers.map((name) => ({ name }))} />
       </div>
     </div>
   );
