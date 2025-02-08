@@ -1,7 +1,9 @@
 'use client';
 
-import Editor from '../pages/Editor';
+import Gemini from '../pages/Gemini';
+
+
 
 export default function Home() {
-  return <Editor />;
+  return <Gemini initialPrompt="A computer is a high tech device that uses transistors to function."/>;
 }
