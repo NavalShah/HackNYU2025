@@ -1,22 +1,22 @@
-enum Strength {
+export enum Strength {
     Weak,
     Strong
 }
 
-enum Speed {
+export enum Speed {
     Slow,
     Fast
 }
 
 
-interface Encoder {
+export interface Encoder {
     encode: (input: string) => string,
     decode: (input: string) => string,
     strength: Strength,
     speed: Speed
 }
 
-class CaesarCipher implements Encoder {
+export class CaesarCipher implements Encoder {
     strength = Strength.Weak;
     speed = Speed.Fast;
     
@@ -28,3 +28,4 @@ class CaesarCipher implements Encoder {
         return "";
     }
 }
+
