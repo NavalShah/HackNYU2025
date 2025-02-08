@@ -5,7 +5,7 @@ import { ChatSession, GoogleGenerativeAI, StartChatParams } from "@google/genera
 import APIKey from './GeminiAPIKey';
 
 const googleAI = new GoogleGenerativeAI(APIKey);
-const model = googleAI.getGenerativeModel({ model: "gemini-2.0-pro" });
+const model = googleAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 function startChat() {
   let chat = model.startChat();
