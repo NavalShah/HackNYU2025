@@ -1,3 +1,6 @@
+
+
+
 enum Strength {
     Weak,
     Strong
@@ -28,3 +31,4 @@ class CaesarCipher implements Encoder {
         return "";
     }
 }
+
