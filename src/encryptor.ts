@@ -28,7 +28,7 @@ export const Blowfish = new class {
 
     decrypt(encryptedText: string, key: string): string {
         const bytes = cryptoJS.Blowfish.decrypt(encryptedText, key);
-        return bytes.toString(cryptoJS.enc.Utf8);
+        return bytes.toString();
     }
 };
 
@@ -47,7 +47,7 @@ export const TripleDES = new class {
             mode: cryptoJS.mode.ECB,
             padding: cryptoJS.pad.Pkcs7,
         });
-        return decrypted.toString(cryptoJS.enc.Utf8);
+        return decrypted.toString();
     }
 };
 
@@ -61,18 +61,18 @@ export const AES = new class {
 
     decrypt(encryptedText: string): string {
         const bytes = cryptoJS.AES.decrypt(encryptedText, this.secretKey);
-        return bytes.toString(cryptoJS.enc.Utf8);
+        return bytes.toString();
     }
 };
 
 // Base64 Encoding and Decoding
 export const Base64 = new class {
     encode(encryptingText: string): string {
-        return Buffer.from(encryptingText).toString('base64');
+        return btoa(encryptingText);
     }
 
     decode(decryptingText: string): string {
-        return Buffer.from(decryptingText, 'base64').toString('utf-8');
+        return atob(decryptingText);
     }
 };
 
