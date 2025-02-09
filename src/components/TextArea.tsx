@@ -26,35 +26,37 @@ type TextAreaProps = {
 export default function TextArea({ ciphers }: TextAreaProps) {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
+  const [mode, setMode] = useState<'encrypt' | 'decrypt'>('encrypt'); // Add mode state
 
-  const handleEncrypt = () => {
+  // Real-time encryption/decryption logic
+  React.useEffect(() => {
     let result = inputText;
 
     ciphers.forEach((cipher) => {
       switch (cipher.name) {
         case 'Caesar Cipher':
-          result = caesarCipher(result, cipher.defaultValue || 3, true);
+          result = caesarCipher(result, cipher.defaultValue || 3, mode === 'encrypt');
           break;
         case 'Vigenère Cipher':
-          result = vigenereCipher(result, cipher.defaultValue || 'key', true);
+          result = vigenereCipher(result, cipher.defaultValue || 'key', mode === 'encrypt');
           break;
         case 'XOR Cipher':
-          result = xorCipher(result, cipher.defaultValue || 'secret', true);
+          result = xorCipher(result, cipher.defaultValue || 'secret', mode === 'encrypt');
           break;
         case 'Base64 Encoding':
-          result = base64Encode(result);
+          result = mode === 'encrypt' ? base64Encode(result) : base64Decode(result);
           break;
         case 'Base64 Decoding':
-          result = base64Decode(result);
-          break
+          result = mode === 'encrypt' ? base64Decode(result) : base64Encode(result);
+          break;
         case 'Blowfish':
-          result = blowfish(result, cipher.defaultValue || 'secret', true);
+          result = blowfish(result, cipher.defaultValue || 'secret', mode === 'encrypt');
           break;
         case 'TripleDES':
-          result = tripleDES(result, cipher.defaultValue || 'secret', true);
+          result = tripleDES(result, cipher.defaultValue || 'secret', mode === 'encrypt');
           break;
         case 'AES':
-          result = aes(result, cipher.defaultValue || 'secret', true);
+          result = aes(result, cipher.defaultValue || 'secret', mode === 'encrypt');
           break;
         default:
           break;
@@ -62,50 +64,13 @@ export default function TextArea({ ciphers }: TextAreaProps) {
     });
 
     setOutputText(result);
-  };
-
-  const handleDecrypt = () => {
-    let result = inputText;
-
-    ciphers.reverse().forEach((cipher) => {
-      switch (cipher.name) {
-        case 'Caesar Cipher':
-          result = caesarCipher(result, cipher.defaultValue || 3, false);
-          break;
-        case 'Vigenère Cipher':
-          result = vigenereCipher(result, cipher.defaultValue || 'key', false);
-          break;
-        case 'XOR Cipher':
-          result = xorCipher(result, cipher.defaultValue || 'secret', false);
-          break;
-        case 'Base64 Encoding':
-          result = base64Decode(result);
-          break;
-        case 'Base64 Decoding':
-          result = base64Encode(result);
-          break;
-        case 'Blowfish':
-          result = blowfish(result, cipher.defaultValue || 'secret', false);
-          break;
-        case 'TripleDES':
-          result = tripleDES(result, cipher.defaultValue || 'secret', false);
-          break;
-        case 'AES':
-          result = aes(result, cipher.defaultValue || 'secret', false);
-          break;
-        default:
-          break;
-      }
-    });
-
-    setOutputText(result);
-  };
+  }, [inputText, ciphers, mode]); // Re-run when inputText, ciphers, or mode changes
 
   const handleDownload = () => {
     const blob = new Blob([outputText], { type: 'text/plain' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'encrypted_output.txt';
+    link.download = 'output.txt';
     link.click();
     URL.revokeObjectURL(link.href);
   };
@@ -118,26 +83,28 @@ export default function TextArea({ ciphers }: TextAreaProps) {
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
       />
-      <div className="flex gap-2">
+      <div className="flex gap-2 mb-4">
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-          onClick={handleEncrypt}
+          className={`px-4 py-2 rounded ${mode === 'encrypt' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+          onClick={() => setMode('encrypt')}
         >
           Encrypt
         </button>
         <button
-          className="bg-green-500 text-white px-4 py-2 rounded"
-          onClick={handleDecrypt}
+          className={`px-4 py-2 rounded ${mode === 'decrypt' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+          onClick={() => setMode('decrypt')}
         >
           Decrypt
         </button>
+
         <button
           className="bg-purple-500 text-white px-4 py-2 rounded"
           onClick={handleDownload}
-          disabled={!outputText}
+          disabled={!outputText} // Disable if no output
         >
           Download
         </button>
+
       </div>
       <textarea
         className="text-area"
@@ -145,6 +112,13 @@ export default function TextArea({ ciphers }: TextAreaProps) {
         value={outputText}
         readOnly
       />
+      <button
+        className="bg-purple-500 text-white px-4 py-2 rounded mt-4"
+        onClick={handleDownload}
+        disabled={!outputText}
+      >
+        Download
+      </button>
     </div>
   );
 }
