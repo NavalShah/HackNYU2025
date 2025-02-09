@@ -23,10 +23,15 @@ type TextAreaProps = {
   ciphers: Cipher[];
 };
 
+enum EncryptionMode {
+  encrypt,
+  decrypt
+}
+
 export default function TextArea({ ciphers }: TextAreaProps) {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
-  const [mode, setMode] = useState<'encrypt' | 'decrypt'>('encrypt');
+  const [mode, setMode] = useState<EncryptionMode>(EncryptionMode.encrypt);
   const [copyText, setCopyText] = useState('Copy to Clipboard');
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,31 +49,39 @@ export default function TextArea({ ciphers }: TextAreaProps) {
   React.useEffect(() => {
     let result = inputText;
 
-    ciphers.forEach((cipher) => {
+    console.log(ciphers);    
+
+    ciphers.toReversed();
+
+    let currentCiphers = ciphers;
+
+    if (mode === EncryptionMode.decrypt) currentCiphers = currentCiphers.toReversed();
+
+    currentCiphers.forEach((cipher) => {
       switch (cipher.name) {
         case 'Caesar Cipher':
-          result = caesarCipher(result, cipher.defaultValue || 3, mode === 'encrypt');
+          result = caesarCipher(result, cipher.defaultValue || 3, mode === EncryptionMode.encrypt);
           break;
         case 'Vigenère Cipher':
-          result = vigenereCipher(result, cipher.defaultValue || 'key', mode === 'encrypt');
+          result = vigenereCipher(result, cipher.defaultValue || 'key', mode === EncryptionMode.encrypt);
           break;
         case 'XOR Cipher':
-          result = xorCipher(result, cipher.defaultValue || 'secret', mode === 'encrypt');
+          result = xorCipher(result, cipher.defaultValue || 'secret', mode === EncryptionMode.encrypt);
           break;
         case 'Base64 Encoding':
-          result = mode === 'encrypt' ? base64Encode(result) : base64Decode(result);
+          result = (mode === EncryptionMode.encrypt ? base64Encode(result) : base64Decode(result));
           break;
         case 'Base64 Decoding':
-          result = mode === 'encrypt' ? base64Decode(result) : base64Encode(result);
+          result = (mode === EncryptionMode.encrypt ? base64Decode(result) : base64Encode(result));
           break;
         case 'Blowfish':
-          result = blowfish(result, cipher.defaultValue || 'secret', mode === 'encrypt');
+          result = blowfish(result, cipher.defaultValue || 'secret', mode === EncryptionMode.encrypt);
           break;
         case 'TripleDES':
-          result = tripleDES(result, cipher.defaultValue || 'secret', mode === 'encrypt');
+          result = tripleDES(result, cipher.defaultValue || 'secret', mode === EncryptionMode.encrypt);
           break;
         case 'AES':
-          result = aes(result, cipher.defaultValue || 'secret', mode === 'encrypt');
+          result = aes(result, cipher.defaultValue || 'secret', mode === EncryptionMode.encrypt);
           break;
         default:
           break;
@@ -107,14 +120,14 @@ export default function TextArea({ ciphers }: TextAreaProps) {
       <div className="flex gap-2 mb-4">
         <div className="flex px-4 py-4 rounded bg-gray-400">
           <button
-            className={`px-4 py-2 ${mode === 'encrypt' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-            onClick={() => setMode('encrypt')}
+            className={`px-4 py-2 ${mode === EncryptionMode.encrypt ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+            onClick={() => setMode(EncryptionMode.encrypt)}
           >
             Encrypt
           </button>
           <button
-            className={`px-4 py-2 ${mode === 'decrypt' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'}`}
-            onClick={() => setMode('decrypt')}
+            className={`px-4 py-2 ${mode === EncryptionMode.decrypt ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-700'}`}
+            onClick={() => setMode(EncryptionMode.decrypt)}
           >
             Decrypt
           </button>

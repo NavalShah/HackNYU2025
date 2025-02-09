@@ -4,20 +4,13 @@ import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import DropZone from '../components/DropZone';
 import TextArea from '../components/TextArea';
-
-type Cipher = {
-  name: string;
-  key?: string;
-  defaultValue?: any;
-  strength: string;
-};
+import MainPage from '@/components/MainPage';
 
 export default function Home() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isSignup, setIsSignup] = useState(true); // Toggle for signup form
-  const [ciphers, setCiphers] = useState<Cipher[]>([]);
   const [state0, setState0] = useState(true);
   const [state1, setState1] = useState(true);
 
@@ -54,36 +47,6 @@ export default function Home() {
       setMessage("Login successful.");
       setState0(false);
     }
-  };
-
-  const handleDrop = (cipher: Cipher, index?: number) => {
-    if (index !== undefined) {
-      // Insert at a specific index
-      const newCiphers = [...ciphers];
-      newCiphers.splice(index, 0, cipher);
-      setCiphers(newCiphers);
-    } else {
-      // Add to the end
-      setCiphers([...ciphers, cipher]);
-    }
-  };
-
-  const handleDelete = (index: number) => {
-    const newCiphers = ciphers.filter((_, i) => i !== index);
-    setCiphers(newCiphers);
-  };
-
-  const handleUpdateCipher = (index: number, key: string, value: any) => {
-    const updatedCiphers = [...ciphers];
-    updatedCiphers[index] = { ...updatedCiphers[index], [key]: value };
-    setCiphers(updatedCiphers);
-  };
-
-  const handleReorder = (fromIndex: number, toIndex: number) => {
-    const newCiphers = [...ciphers];
-    const [movedCipher] = newCiphers.splice(fromIndex, 1); // Remove from old position
-    newCiphers.splice(toIndex, 0, movedCipher); // Insert at new position
-    setCiphers(newCiphers);
   };
 
   if(state0) {
@@ -147,17 +110,5 @@ export default function Home() {
       </div>)
   }
 
-  return (<div className="flex h-screen w-full">
-    <Sidebar onDrop={handleDrop} />
-    <div className="flex flex-col flex-grow overflow-auto">
-      <DropZone
-        ciphers={ciphers}
-        onDrop={handleDrop}
-        onDelete={handleDelete}
-        onUpdateCipher={handleUpdateCipher}
-        onReorder={handleReorder}
-      />
-      <TextArea ciphers={ciphers} />
-    </div>
-  </div>);
+  return (<MainPage/>)
 }

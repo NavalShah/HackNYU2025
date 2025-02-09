@@ -1,5 +1,8 @@
 // ciphers.ts
 
+// Blowfish (using a library like `crypto-js`)
+import CryptoJS from 'crypto-js';
+
 // Caesar Cipher
 export const caesarCipher = (text: string, shift: number, encrypt: boolean = true): string => {
   return text
@@ -51,15 +54,12 @@ export const xorCipher = (text: string, key: string, encrypt: boolean = true): s
 
 // Base64 Encoding (Not a cipher, but useful for encoding/decoding)
 export const base64Encode = (text: string): string => {
-  return Buffer.from(text).toString('base64');
+  return btoa('base64');
 };
 
 export const base64Decode = (text: string): string => {
-  return Buffer.from(text, 'base64').toString('utf-8');
+  return atob('utf-8');
 };
-
-// Blowfish (using a library like `crypto-js`)
-import CryptoJS from 'crypto-js';
 
 export const blowfish = (text: string, key: string, encrypt: boolean = true): string => {
   if (encrypt) {
