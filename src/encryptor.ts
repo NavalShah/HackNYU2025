@@ -1,5 +1,5 @@
 import cryptoJS from "crypto-js";
-const AESencryptor = require("aes-encryption");
+import blowfish from "@sighmir/blowfish";
 
 // Morse Code Encoding and Decoding
 export const MorseCode = new class {
@@ -24,12 +24,17 @@ export const MorseCode = new class {
 // Blowfish Encryption and Decryption
 export const Blowfish = new class {
     encrypt(plainText: string, key: string): string {
-        return cryptoJS.Blowfish.encrypt(plainText, key).toString();
+        const bf = blowfish(key);
+        const buffer = Buffer.from(plainText);
+        bf.encipher(buffer);
+        return buffer.toString();
     }
 
     decrypt(encryptedText: string, key: string): string {
-        const bytes = cryptoJS.Blowfish.decrypt(encryptedText, key);
-        return bytes.toString(cryptoJS.enc.Utf8);
+        const bf = blowfish(key);
+        const buffer = Buffer.from(encryptedText);
+        bf.decipher(buffer);
+        return buffer.toString();
     }
 };
 
