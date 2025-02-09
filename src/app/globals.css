@@ -3,172 +3,214 @@
 @tailwind utilities;
 
 /* Custom styles */
+/* Custom styles */
 body {
-  background-color: #FFFDD0; /* Cream background */
-  color: #1E3A8A; /* Dark blue text */
-}
+    background-color: #0e2460; /* Cream background */
+    color: #1E3A8A; /* Dark blue text */
+    /* white-space: pre; */
+  }
+  
+  .sidebar {
+    width: 350px;
+    height: 100vh;
+    background-color: #f5f5dc;
+    padding: 1rem;
+    border-right: 1px solid gray;
+  }
+  
+  .drop-zone {
+    flex-grow: 1;
+    padding: 1rem;
+    background-color: #f0f0e7;
+    min-height: 50vh;
+    overflow-y: auto; /* Make the drop zone scrollable */
+  }
+  
+  .text-area {
+    width: 100%;
+    height: 50px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: #ffffff; /* White background for text areas */
+    color: #1E3A8A; /* Dark blue text */
+    border-top: 1px solid gray;
+  }
+  
+  .cipher-tile {
+    background-color: #ffffff;
+    color: #1E3A8A;
+    border: 1px solid #1E3A8A;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .delete-button {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    background-color: #cc0000;
+  }
 
-.sidebar {
-  width: 250px;
-  height: 100vh;
-  background-color: #f4f4f4;
-  padding: 1rem;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  body {
+    background: #f7f4f1; /* Creamy background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .auth-card {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #4f4f4f;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .input-group {
+    margin-bottom: 15px;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  
+  .input-field:focus {
+    border-color: #007bff;
+  }
+  
+  .auth-button {
+    width: 100%;
+    padding: 14px;
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .auth-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .message {
+    color: #ff4d4d;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .toggle-action {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .toggle-button {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .toggle-button:hover {
+    color: #0056b3;
+  }
+  .guest-action {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .guest-button {
+    background: none;
+    border: none;
+    color: #28a745;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .guest-button:hover {
+    color: #218838;
+  }
+  
 
-.drop-zone {
-  flex-grow: 1;
-  padding: 1rem;
-  background-color: #eaeaea;
-  min-height: 50vh;
-}
+  
+  /* Responsive styles for mobile */
+  @media (max-width: 768px) {
+    .flex {
+      flex-direction: column; /* Stack sidebar and drop zone vertically on mobile */
+    }
+  
+    .sidebar {
+      width: 100%; /* Full width on mobile */
+      height: auto; /* Auto height on mobile */
+    }
+  
+    .drop-zone {
+      min-height: auto; /* Auto height on mobile */
+    }
+  
+    .cipher-tile {
+      flex-direction: column; /* Stack cipher name and input fields vertically on mobile */
+      align-items: flex-start;
+    }
+  
+    .cipher-tile > div {
+      width: 100%; /* Full width for input fields on mobile */
+    }
+  
+    .cipher-tile input {
+      width: 100%; /* Full width for input fields on mobile */
+    }
+  
+    .text-area {
+      height: 100px; /* Smaller height for text areas on mobile */
+      resize: vertical;
+    }
+  }
 
-.text-area {
-  width: 100%;
-  height: 150px;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  background-color: #ffffff; /* White background for text areas */
-  color: #1E3A8A; /* Dark blue text */
-  border: 1px solid #1E3A8A; /* Dark blue border */
-}
-
-.cipher-tile {
-  background-color: #ffffff; /* White background for tiles */
-  color: #1E3A8A; /* Dark blue text */
-  border: 1px solid #1E3A8A; /* Dark blue border */
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  border-radius: 0.25rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.delete-button {
-  background-color: #ff4444; /* Red delete button */
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.delete-button:hover {
-  background-color: #cc0000; /* Darker red on hover */
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
-}
-
-body {
-  background: #f7f4f1; /* Creamy background color */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 600px;
-}
-
-.auth-card {
-  background-color: white;
-  padding: 30px 40px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  width: 100%;
-}
-
-h1 {
-  text-align: center;
-  color: #4f4f4f;
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.input-group {
-  margin-bottom: 15px;
-}
-
-.input-field {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 16px;
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-.input-field:focus {
-  border-color: #007bff;
-}
-
-.auth-button {
-  width: 100%;
-  padding: 14px;
-  background-color: #007bff;
-  color: white;
-  font-size: 18px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.auth-button:hover {
-  background-color: #0056b3;
-}
-
-.message {
-  color: #ff4d4d;
-  text-align: center;
-  margin-top: 10px;
-}
-
-.toggle-action {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.toggle-button {
-  background: none;
-  border: none;
-  color: #007bff;
-  font-size: 16px;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.toggle-button:hover {
-  color: #0056b3;
-}
-.guest-action {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.guest-button {
-  background: none;
-  border: none;
-  color: #28a745;
-  font-size: 16px;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.guest-button:hover {
-  color: #218838;
-}

@@ -58,37 +58,6 @@ export const base64Decode = (text: string): string => {
   return Buffer.from(text, 'base64').toString('utf-8');
 };
 
-// ciphers.ts
-
-// Morse Code
-// const MORSE_CODE_MAP: { [key: string]: string } = {
-//   A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....',
-//   I: '..', J: '.---', K: '-.-', L: '.-..', M: '--', N: '-.', O: '---', P: '.--.',
-//   Q: '--.-', R: '.-.', S: '...', T: '-', U: '..-', V: '...-', W: '.--', X: '-..-',
-//   Y: '-.--', Z: '--..', '1': '.----', '2': '..---', '3': '...--', '4': '....-',
-//   '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.', '0': '-----',
-//   ' ': '/'
-// };
-
-// const REVERSE_MORSE_CODE_MAP: { [key: string]: string } = Object.fromEntries(
-//   Object.entries(MORSE_CODE_MAP).map(([key, value]) => [value, key])
-// );
-
-// export const morseCode = (text: string, encrypt: boolean = true): string => {
-//   if (encrypt) {
-//     return text
-//       .toUpperCase()
-//       .split('')
-//       .map((char) => MORSE_CODE_MAP[char] || char)
-//       .join(' ');
-//   } else {
-//     return text
-//       .split(' ')
-//       .map((code) => REVERSE_MORSE_CODE_MAP[code] || code)
-//       .join('');
-//   }
-// };
-
 // Blowfish (using a library like `crypto-js`)
 import CryptoJS from 'crypto-js';
 
