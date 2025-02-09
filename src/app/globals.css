@@ -19,7 +19,8 @@ body {
   flex-grow: 1;
   padding: 1rem;
   background-color: #eaeaea;
-  min-height: 50vh;
+  min-height: vh;
+  overflow-y: auto;
 }
 
 .text-area {
