@@ -8,8 +8,6 @@ const CIPHERS = [
   { name: 'Vigenère Cipher', key: 'key', defaultValue: 'key', strength: 'Medium' },
   { name: 'XOR Cipher', key: 'key', defaultValue: 'secret', strength: 'High' },
   { name: 'Base64 Encoding', key: null, defaultValue: null, strength: 'Low' },
-  { name: 'Base64 Decoding', key: null, defaultValue: null, strength: 'Low' },
-  { name: 'Morse Code', key: null, defaultValue: null, strength: 'Low' },
   { name: 'Blowfish', key: 'key', defaultValue: 'secret', strength: 'High' },
   { name: 'TripleDES', key: 'key', defaultValue: 'secret', strength: 'High' },
   { name: 'AES', key: 'key', defaultValue: 'secret', strength: 'High' },

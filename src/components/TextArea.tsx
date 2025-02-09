@@ -112,13 +112,6 @@ export default function TextArea({ ciphers }: TextAreaProps) {
         value={outputText}
         readOnly
       />
-      <button
-        className="bg-purple-500 text-white px-4 py-2 rounded mt-4"
-        onClick={handleDownload}
-        disabled={!outputText}
-      >
-        Download
-      </button>
     </div>
   );
 }
