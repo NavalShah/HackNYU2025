@@ -16,7 +16,7 @@ const CIPHERS = [
   { name: 'AES', key: 'key', defaultValue: 'secret', strength: 'High' },
 ];
 
-export default function Sidebar({ onDrop }: { onDrop: (cipher: { name: string; key?: string; defaultValue?: any; strength: string }) => void }) {
+export default function Sidebar({ onDrop }: { onDrop: (cipher: { name: string; key?: string; defaultValue?: any; strength: string, rawStrength: number }) => void }) {
   return (
     <div className="sidebar">
       <h2 className="text-lg font-bold mb-4">Ciphers</h2>

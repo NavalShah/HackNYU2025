@@ -27,6 +27,7 @@ export default function DropZone({ ciphers, onDrop, onDelete }: DropZoneProps) {
     e.preventDefault();
   };
 
+
   return (
     <div
       className="drop-zone"

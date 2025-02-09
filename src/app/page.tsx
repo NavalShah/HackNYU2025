@@ -10,6 +10,7 @@ type Cipher = {
   key?: string;
   defaultValue?: any;
   strength: string;
+  rawStrength: number;
 };
 
 export default function Home() {
