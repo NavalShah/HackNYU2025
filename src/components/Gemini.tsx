@@ -33,7 +33,7 @@ function Gemini({ initialPrompt }: Props) {
   const [chat, setChat] = useState<ChatSession>();
   useEffect(() => {
     if (!chat) setChat(startChat());
-  }, []);
+  }, [chat]);
 
   const [messages, setMessages] = useState<message[]>([]);
   const [input, setInput] = useState("");
@@ -60,13 +60,13 @@ function Gemini({ initialPrompt }: Props) {
       }
 
       setWaiting(true);
-      let result = await chat?.sendMessage(aiContext);
-      setChat(chat);
-
       try {
-        setMessages(prev => [...prev, { text: "" + result?.response.text(), sender: messageSender.ai }]);
-      } catch (e) {
-        throw e;
+        const result = await chat?.sendMessage(aiContext);
+        if (!result) throw new Error("Failed to get response from AI");
+        setChat(chat);
+        setMessages(prev => [...prev, { text: result.response.text(), sender: messageSender.ai }]);
+      } catch (error) {
+        setMessages(prev => [...prev, { text: "Error processing response.", sender: messageSender.error }]);
       }
       setWaiting(false);
     }
@@ -74,10 +74,10 @@ function Gemini({ initialPrompt }: Props) {
 
   return (
     <center className="flex flex-col h-full auto p-4 bg-gray-100 margin-auto">
-      <div className="flex overflow-auto bg-white p-4 shadow">
+      <div className="flex bg-white p-4 shadow">
         {initialPrompt}
       </div>
-      <div className="overflow-auto bg-gray p-1 shadow italic light">
+      <div className="bg-gray-200 p-1 shadow italic light">
         You can use this Gemini-Powered chat to learn more.
       </div>
       <div className="flex flex-col overflow-auto bg-white p-4 shadow h-full flex-grow-1 space-y-2"> {/* Use flex-col and space-y for vertical stacking */}
