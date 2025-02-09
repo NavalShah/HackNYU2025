@@ -55,6 +55,7 @@ export default function Home() {
             onDrop={handleDrop}
             onDelete={handleDelete}
             onUpdateCipher={handleUpdateCipher}
+            onReorder={handleReorder}
           />
           <TextArea ciphers={ciphers} />
         </div>

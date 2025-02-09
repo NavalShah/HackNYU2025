@@ -7,7 +7,6 @@ type Cipher = {
   key?: string;
   defaultValue?: any;
   strength: string;
-  rawStrength: number;
 };
 
 type DropZoneProps = {
