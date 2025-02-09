@@ -5,21 +5,22 @@
 /* Custom styles */
 /* Custom styles */
 body {
-    background-color: #FFFDD0; /* Cream background */
+    background-color: #0e2460; /* Cream background */
     color: #1E3A8A; /* Dark blue text */
   }
   
   .sidebar {
     width: 350px;
     height: 100vh;
-    background-color: #f4f4f4;
+    background-color: #f5f5dc;
     padding: 1rem;
+    border-right: 1px solid gray;
   }
   
   .drop-zone {
     flex-grow: 1;
     padding: 1rem;
-    background-color: #eaeaea;
+    background-color: #f0f0e7;
     min-height: 50vh;
     overflow-y: auto; /* Make the drop zone scrollable */
   }
@@ -31,7 +32,7 @@ body {
     margin-bottom: 1rem;
     background-color: #ffffff; /* White background for text areas */
     color: #1E3A8A; /* Dark blue text */
-    border: 1px solid #1E3A8A; /* Dark blue border */
+    border-top: 1px solid gray;
   }
   
   .cipher-tile {
@@ -93,5 +94,7 @@ body {
   
     .text-area {
       height: 100px; /* Smaller height for text areas on mobile */
+      resize: vertical;
     }
   }
+
