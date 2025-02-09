@@ -1,4 +1,5 @@
 import cryptoJS from "crypto-js";
+const AESencryptor = require("aes-encryption");
 
 // Morse Code Encoding and Decoding
 export const MorseCode = new class {
@@ -47,7 +48,7 @@ export const TripleDES = new class {
             mode: cryptoJS.mode.ECB,
             padding: cryptoJS.pad.Pkcs7,
         });
-        return decrypted.toString();
+        return decrypted.toString(cryptoJS.enc.Utf8);
     }
 };
 
@@ -61,7 +62,7 @@ export const AES = new class {
 
     decrypt(encryptedText: string): string {
         const bytes = cryptoJS.AES.decrypt(encryptedText, this.secretKey);
-        return bytes.toString();
+        return bytes.toString(cryptoJS.enc.Utf8);
     }
 };
 
