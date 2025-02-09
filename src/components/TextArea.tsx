@@ -96,6 +96,15 @@ export default function TextArea({ ciphers }: TextAreaProps) {
         >
           Decrypt
         </button>
+
+        <button
+          className="bg-purple-500 text-white px-4 py-2 rounded"
+          onClick={handleDownload}
+          disabled={!outputText} // Disable if no output
+        >
+          Download
+        </button>
+
       </div>
       <textarea
         className="text-area"
