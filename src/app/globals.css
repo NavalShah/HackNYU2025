@@ -3,61 +3,95 @@
 @tailwind utilities;
 
 /* Custom styles */
+/* Custom styles */
 body {
-  background-color: #FFFDD0; /* Cream background */
-  color: #1E3A8A; /* Dark blue text */
-}
-
-.sidebar {
-  width: 250px;
-  height: 100vh;
-  background-color: #f4f4f4;
-  padding: 1rem;
-}
-
-.drop-zone {
-  flex-grow: 1;
-  padding: 1rem;
-  background-color: #eaeaea;
-  min-height: vh;
-  overflow-y: auto;
-}
-
-.text-area {
-  width: 100%;
-  height: 150px;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  background-color: #ffffff; /* White background for text areas */
-  color: #1E3A8A; /* Dark blue text */
-  border: 1px solid #1E3A8A; /* Dark blue border */
-}
-
-.cipher-tile {
-  background-color: #ffffff; /* White background for tiles */
-  color: #1E3A8A; /* Dark blue text */
-  border: 1px solid #1E3A8A; /* Dark blue border */
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  border-radius: 0.25rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.delete-button {
-  background-color: #ff4444; /* Red delete button */
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.delete-button:hover {
-  background-color: #cc0000; /* Darker red on hover */
-}
+    background-color: #FFFDD0; /* Cream background */
+    color: #1E3A8A; /* Dark blue text */
+  }
+  
+  .sidebar {
+    width: 350px;
+    height: 100vh;
+    background-color: #f4f4f4;
+    padding: 1rem;
+  }
+  
+  .drop-zone {
+    flex-grow: 1;
+    padding: 1rem;
+    background-color: #eaeaea;
+    min-height: 50vh;
+    overflow-y: auto; /* Make the drop zone scrollable */
+  }
+  
+  .text-area {
+    width: 100%;
+    height: 150px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: #ffffff; /* White background for text areas */
+    color: #1E3A8A; /* Dark blue text */
+    border: 1px solid #1E3A8A; /* Dark blue border */
+  }
+  
+  .cipher-tile {
+    background-color: #ffffff;
+    color: #1E3A8A;
+    border: 1px solid #1E3A8A;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .delete-button {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    background-color: #cc0000;
+  }
+  
+  /* Responsive styles for mobile */
+  @media (max-width: 768px) {
+    .flex {
+      flex-direction: column; /* Stack sidebar and drop zone vertically on mobile */
+    }
+  
+    .sidebar {
+      width: 100%; /* Full width on mobile */
+      height: auto; /* Auto height on mobile */
+    }
+  
+    .drop-zone {
+      min-height: auto; /* Auto height on mobile */
+    }
+  
+    .cipher-tile {
+      flex-direction: column; /* Stack cipher name and input fields vertically on mobile */
+      align-items: flex-start;
+    }
+  
+    .cipher-tile > div {
+      width: 100%; /* Full width for input fields on mobile */
+    }
+  
+    .cipher-tile input {
+      width: 100%; /* Full width for input fields on mobile */
+    }
+  
+    .text-area {
+      height: 100px; /* Smaller height for text areas on mobile */
+    }
+  }

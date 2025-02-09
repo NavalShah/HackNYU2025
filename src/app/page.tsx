@@ -10,7 +10,6 @@ type Cipher = {
   key?: string;
   defaultValue?: any;
   strength: string;
-  rawStrength: number;
 };
 
 export default function Home() {
@@ -32,7 +31,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex flex-col md:flex-row h-screen">
       <Sidebar onDrop={handleDrop} />
       <div className="flex flex-col flex-grow overflow-auto">
         <DropZone
