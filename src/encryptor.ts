@@ -28,7 +28,7 @@ export const Blowfish = new class {
 
     decrypt(encryptedText: string, key: string): string {
         const bytes = cryptoJS.Blowfish.decrypt(encryptedText, key);
-        return bytes.toString();
+        return bytes.toString(cryptoJS.enc.Utf8);
     }
 };
 
