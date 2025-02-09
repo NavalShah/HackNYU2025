@@ -1,9 +1,6 @@
 "use client"; // Ensure client-side rendering
 
 import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar';
-import DropZone from '../components/DropZone';
-import TextArea from '../components/TextArea';
 import MainPage from '@/components/MainPage';
 
 export default function Home() {

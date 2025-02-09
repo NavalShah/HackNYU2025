@@ -4,8 +4,8 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Elementor Like',
-  description: 'An app which act like elementor',
+  title: 'HackCrypt',
+  description: 'An educational app with a focus on ciphers',
 };
 
 export default function RootLayout({
