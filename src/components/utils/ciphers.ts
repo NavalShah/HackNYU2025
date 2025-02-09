@@ -54,11 +54,11 @@ export const xorCipher = (text: string, key: string, encrypt: boolean = true): s
 
 // Base64 Encoding (Not a cipher, but useful for encoding/decoding)
 export const base64Encode = (text: string): string => {
-  return btoa('base64');
+  return btoa(text);
 };
 
 export const base64Decode = (text: string): string => {
-  return atob('utf-8');
+  return atob(text);
 };
 
 export const blowfish = (text: string, key: string, encrypt: boolean = true): string => {
