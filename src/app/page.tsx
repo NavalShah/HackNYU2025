@@ -25,11 +25,22 @@ export default function Home() {
     setCiphers(newCiphers);
   };
 
+  const handleUpdateCipher = (index: number, key: string, value: any) => {
+    const updatedCiphers = [...ciphers];
+    updatedCiphers[index] = { ...updatedCiphers[index], [key]: value };
+    setCiphers(updatedCiphers);
+  };
+
   return (
     <div className="flex h-screen">
       <Sidebar onDrop={handleDrop} />
       <div className="flex flex-col flex-grow overflow-auto">
-        <DropZone ciphers={ciphers} onDrop={handleDrop} onDelete={handleDelete} />
+        <DropZone
+          ciphers={ciphers}
+          onDrop={handleDrop}
+          onDelete={handleDelete}
+          onUpdateCipher={handleUpdateCipher}
+        />
         <TextArea ciphers={ciphers} />
       </div>
     </div>

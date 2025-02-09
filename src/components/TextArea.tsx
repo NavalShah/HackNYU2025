@@ -46,10 +46,7 @@ export default function TextArea({ ciphers }: TextAreaProps) {
           break;
         case 'Base64 Decoding':
           result = base64Decode(result);
-          break;
-        // case 'Morse Code':
-        //   result = morseCode(result, true);
-        //   break;
+          break
         case 'Blowfish':
           result = blowfish(result, cipher.defaultValue || 'secret', true);
           break;
@@ -66,20 +63,6 @@ export default function TextArea({ ciphers }: TextAreaProps) {
 
     setOutputText(result);
   };
-
-  const handleDownload = () => {
-    // Create a Blob with the output text
-    const blob = new Blob([outputText], { type: 'text/plain' });
-    // Create a link element
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'encrypted_output.txt'; // File name
-    // Trigger the download
-    link.click();
-    // Clean up
-    URL.revokeObjectURL(link.href);
-  };
-
 
   const handleDecrypt = () => {
     let result = inputText;
@@ -101,9 +84,6 @@ export default function TextArea({ ciphers }: TextAreaProps) {
         case 'Base64 Decoding':
           result = base64Encode(result);
           break;
-        // case 'Morse Code':
-        //   result = morseCode(result, false);
-        //   break;
         case 'Blowfish':
           result = blowfish(result, cipher.defaultValue || 'secret', false);
           break;
@@ -119,6 +99,15 @@ export default function TextArea({ ciphers }: TextAreaProps) {
     });
 
     setOutputText(result);
+  };
+
+  const handleDownload = () => {
+    const blob = new Blob([outputText], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'encrypted_output.txt';
+    link.click();
+    URL.revokeObjectURL(link.href);
   };
 
   return (
@@ -145,7 +134,7 @@ export default function TextArea({ ciphers }: TextAreaProps) {
         <button
           className="bg-purple-500 text-white px-4 py-2 rounded"
           onClick={handleDownload}
-          disabled={!outputText} // Disable if no output
+          disabled={!outputText}
         >
           Download
         </button>
