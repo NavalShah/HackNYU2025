@@ -1,37 +1,17 @@
-// models/User.ts
-import clientPromise from '../lib/mongodb';
-import bcrypt from 'bcrypt';
+import mongoose, { Schema, Document } from 'mongoose';
 
-// Define the structure of a User
-interface User {
+interface IUser extends Document {
   email: string;
   password: string;
+  username: string;
 }
 
-// Function to create a new user
-export async function createUser({ email, password }: User): Promise<{ insertedId: string }> {
-  const client = await clientPromise;
-  const db = client.db(); // Replace with your database name
-  const usersCollection = db.collection<User>('users');
+const userSchema = new Schema<IUser>({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  username: { type: String, required: true },
+});
 
-  // Hash the password
-  const hashedPassword = await bcrypt.hash(password, 10);
+const User = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 
-  // Insert the user into the database
-  const result = await usersCollection.insertOne({
-    email,
-    password: hashedPassword,
-  });
-
-  return { insertedId: result.insertedId.toString() };
-}
-
-// Function to find a user by email
-export async function findUserByEmail(email: string): Promise<User | null> {
-  const client = await clientPromise;
-  const db = client.db(); // Replace with your database name
-  const usersCollection = db.collection<User>('users');
-
-  const user = await usersCollection.findOne({ email });
-  return user;
-}
+export default User;

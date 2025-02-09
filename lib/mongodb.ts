@@ -1,27 +1,20 @@
-// lib/mongodb.ts
-import { MongoClient, MongoClientOptions } from 'mongodb';
+import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI;
-const options: MongoClientOptions = {};
+const uri = "mongodb+srv://sidnori:<db_password>@logindatabase.9t7f5.mongodb.net/?retryWrites=true&w=majority&appName=LoginDatabase";
 
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
 
 if (!uri) {
-  throw new Error('Please add your MongoDB URI to .env.local');
+  throw new Error("MongoDB URI is missing");
 }
 
-if (process.env.NODE_ENV === 'development') {
-  // In development mode, use a global variable to preserve the MongoClient instance
-  if (!(global as any)._mongoClientPromise) {
-    client = new MongoClient(uri, options);
-    (global as any)._mongoClientPromise = client.connect();
+let client: MongoClient;
+let db: any;
+
+export async function connectDb() {
+  if (!client) {
+    client = new MongoClient(uri);
+    await client.connect();
+    db = client.db();
   }
-  clientPromise = (global as any)._mongoClientPromise;
-} else {
-  // In production mode, create a new MongoClient instance
-  client = new MongoClient(uri, options);
-  clientPromise = client.connect();
+  return db;
 }
-
-export default clientPromise;
