@@ -12,10 +12,9 @@ type Cipher = {
   strength: string;
   rawStrength: number;
 };
-
 export default function Home() {
   const [ciphers, setCiphers] = useState<Cipher[]>([]);
-
+  
   const handleDrop = (cipher: Cipher) => {
     setCiphers([...ciphers, cipher]);
   };
@@ -31,18 +30,32 @@ export default function Home() {
     setCiphers(updatedCiphers);
   };
 
+  const [hasClicked, setClicked] = useState(false);
+
   return (
-    <div className="flex h-screen">
-      <Sidebar onDrop={handleDrop} />
-      <div className="flex flex-col flex-grow overflow-auto">
-        <DropZone
-          ciphers={ciphers}
-          onDrop={handleDrop}
-          onDelete={handleDelete}
-          onUpdateCipher={handleUpdateCipher}
-        />
-        <TextArea ciphers={ciphers} />
+    hasClicked ? 
+      <div className="flex h-screen">
+        <Sidebar onDrop={handleDrop} />
+        <div className="flex flex-col flex-grow overflow-auto">
+          <DropZone
+            ciphers={ciphers}
+            onDrop={handleDrop}
+            onDelete={handleDelete}
+            onUpdateCipher={handleUpdateCipher}
+          />
+          <TextArea ciphers={ciphers} />
+        </div>
       </div>
-    </div>
+    : 
+      <div className="flex flex-col items-center justify-center h-screen bg-[#f5f5dc]">
+        <img src="/logoX.png" alt="HackCrypt Logo"/>
+        <button 
+          className="px-6 py-3 text-lg font-bold text-white bg-gray-800 border-2 border-gray-900 rounded-md shadow-md hover:bg-gray-700" 
+          style={{ fontFamily: 'Pixel, sans-serif' }}
+          onClick={() => setClicked(true)}
+        >
+          Enter App
+        </button>
+      </div>
   );
 }
