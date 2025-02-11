@@ -5,7 +5,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'HackCrypt',
-  description: 'An educational app with a focus on ciphers',
+  description: 'A ciphering sandbox focused on education and accessibility',
 };
 
 export default function RootLayout({
